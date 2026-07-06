@@ -81,9 +81,9 @@ That creates the schema and demo login/data.
 - `curl`
 - `python3`
 - The three sibling repos present at these default paths:
-  - `../Vehicle Telemetry API/vehicle-telemetry-api`
-  - `../Fleet Monitoring Dashboard/fleet-monitoring-dashboard`
-  - `../api-gateway-rate-limiter/api-gateway-rate-limiter`
+  - `../vehicle-telemetry-api`
+  - `../fleet-monitoring-dashboard`
+  - `../api-gateway-rate-limiter`
 
 If your repos live somewhere else, override the Compose build contexts:
 

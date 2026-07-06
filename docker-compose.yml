@@ -37,7 +37,7 @@ services:
 
   telemetry-api:
     build:
-      context: ${TELEMETRY_API_CONTEXT:-../Vehicle Telemetry API/vehicle-telemetry-api}
+      context: ${TELEMETRY_API_CONTEXT:-../vehicle-telemetry-api}
     ports:
       - "${API_HOST_PORT:-18000}:8000"
     depends_on:
@@ -62,7 +62,7 @@ services:
 
   telemetry-worker:
     build:
-      context: ${TELEMETRY_API_CONTEXT:-../Vehicle Telemetry API/vehicle-telemetry-api}
+      context: ${TELEMETRY_API_CONTEXT:-../vehicle-telemetry-api}
     command: ["python", "-m", "app.worker"]
     depends_on:
       postgres:
@@ -82,7 +82,7 @@ services:
 
   telemetry-init:
     build:
-      context: ${TELEMETRY_API_CONTEXT:-../Vehicle Telemetry API/vehicle-telemetry-api}
+      context: ${TELEMETRY_API_CONTEXT:-../vehicle-telemetry-api}
     command: ["sh", "-c", "alembic upgrade head && python -m app.seed"]
     depends_on:
       postgres:
@@ -100,7 +100,7 @@ services:
 
   gateway:
     build:
-      context: ${GATEWAY_CONTEXT:-../api-gateway-rate-limiter/api-gateway-rate-limiter}
+      context: ${GATEWAY_CONTEXT:-../api-gateway-rate-limiter}
     ports:
       - "${GATEWAY_HOST_PORT:-18080}:8080"
     depends_on:
@@ -127,7 +127,7 @@ services:
 
   dashboard:
     build:
-      context: ${DASHBOARD_CONTEXT:-../Fleet Monitoring Dashboard/fleet-monitoring-dashboard}
+      context: ${DASHBOARD_CONTEXT:-../fleet-monitoring-dashboard}
       args:
         VITE_API_BASE_URL: http://localhost:${GATEWAY_HOST_PORT:-18080}/api/v1
     ports:
