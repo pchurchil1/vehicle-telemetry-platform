@@ -1,7 +1,17 @@
 ![Integration Smoke](https://github.com/pchurchil1/DriveOps/actions/workflows/integration.yml/badge.svg)
 # DriveOps: Vehicle Telemetry Platform
 
-DriveOps is a production-shaped vehicle telemetry platform inspired by OEM/Tier-1 engineering workflows: ingest vehicle events, inspect fleet state, enforce authenticated access, protect APIs with rate limiting, and expose operational health/metrics.
+DriveOps is a production-shaped vehicle telemetry platform inspired by OEM/Tier-1 engineering workflows. It runs a React fleet dashboard, authenticated telemetry API, Redis-backed gateway rate limiter, worker, Postgres database, smoke tests, CI, and optional AWS Lite deployment from one orchestration repo.
+
+For a quick review:
+
+```bash
+cp .env.example .env
+make up
+make smoke
+```
+
+Then open `http://localhost:15173` and sign in with `admin / password123`.
 
 This repo ties together three separate projects:
 
@@ -20,6 +30,8 @@ The integrated stack is designed for reproducible local evaluation: the dashboar
 - Redis-backed token buckets enforce rate limits and return standard rate-limit headers.
 - The gateway exposes health and Prometheus-style metrics.
 - The full system can be started, verified, and reset from this orchestration repo.
+- CI validates the app repos, integrated Compose stack, smoke path, and Terraform.
+- AWS Lite can deploy the same shape to ECS Fargate, RDS, ECR, Secrets Manager, CloudWatch, and an ALB.
 
 ## Architecture
 
@@ -40,6 +52,7 @@ flowchart LR
     api --> postgres
     worker --> postgres
 ```
+
 ## Screenshots
 
 ### Fleet Dashboard
@@ -53,7 +66,8 @@ flowchart LR
 
 ### Gateway Metrics
 ![Gateway metrics](docs/screenshots/gateway-metrics.png)
-## How to use:
+
+## Quick Start
 
 `make up` starts:
 
@@ -494,6 +508,12 @@ If containers look stale after changing code in a sibling repo:
 docker compose build --no-cache
 make up
 ```
+
+## Next Roadmap
+
+- Add telemetry API metrics and request/job latency instrumentation.
+- Add dashboard charts for signal trends and event severity distribution.
+- Harden AWS Lite with HTTPS, deployment safety checks, and production runbook notes.
 
 ## Repo Ownership
 
